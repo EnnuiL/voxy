@@ -1,5 +1,7 @@
 package me.cortex.voxy.client.core.gl.shader;
 
+import com.mojang.blaze3d.pipeline.DepthStencilState;
+import com.mojang.blaze3d.platform.CompareOp;
 import me.cortex.voxy.client.core.gl.Capabilities;
 import me.cortex.voxy.client.core.gl.GlDebug;
 import me.cortex.voxy.common.Logger;
@@ -174,6 +176,8 @@ public class Shader extends TrackedObject {
         public T compile() {
             this.defineIf("IS_INTEL", Capabilities.INSTANCE.isIntel);
             this.defineIf("IS_WINDOWS", ThreadUtils.isWindows);
+            // This is probably not the perfect spot for this
+            this.defineIf("USE_REVERSE_Z", DepthStencilState.DEFAULT.depthTest().equals(CompareOp.GREATER_THAN_OR_EQUAL));
             return this.constructor.make(this, this.compileToProgram());
         }
 

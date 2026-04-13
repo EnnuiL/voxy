@@ -1,5 +1,7 @@
 package me.cortex.voxy.client.core.rendering.util;
 
+import com.mojang.blaze3d.pipeline.DepthStencilState;
+import com.mojang.blaze3d.platform.CompareOp;
 import me.cortex.voxy.client.core.gl.GlFramebuffer;
 import me.cortex.voxy.client.core.gl.GlTexture;
 import org.lwjgl.system.MemoryStack;
@@ -48,6 +50,10 @@ public class DepthFramebuffer {
     }
 
     public void clear(float depth) {
+        if (DepthStencilState.DEFAULT.depthTest().equals(CompareOp.GREATER_THAN_OR_EQUAL)) {
+            depth = 1.0f - depth;
+        }
+
         try (var stack = MemoryStack.stackPush()) {
             nglClearNamedFramebufferfv(this.framebuffer.id, GL_DEPTH, 0, stack.nfloat(depth));
         }

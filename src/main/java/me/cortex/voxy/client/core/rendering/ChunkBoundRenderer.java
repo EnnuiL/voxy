@@ -1,5 +1,7 @@
 package me.cortex.voxy.client.core.rendering;
 
+import com.mojang.blaze3d.opengl.GlConst;
+import com.mojang.blaze3d.pipeline.DepthStencilState;
 import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import me.cortex.voxy.client.core.AbstractRenderPipeline;
@@ -145,7 +147,7 @@ public class ChunkBoundRenderer {
         {
             glFrontFace(GL_CCW);//Restore winding order
 
-            glDepthFunc(GL_LEQUAL);
+            glDepthFunc(GlConst.toGl(DepthStencilState.DEFAULT.depthTest()));
 
             //TODO: check this is correct
             glEnable(GL_CULL_FACE);

@@ -1,5 +1,7 @@
 package me.cortex.voxy.client.core.rendering.util;
 
+import com.mojang.blaze3d.opengl.GlConst;
+import com.mojang.blaze3d.pipeline.DepthStencilState;
 import me.cortex.voxy.client.core.gl.GlFramebuffer;
 import me.cortex.voxy.client.core.gl.GlTexture;
 import me.cortex.voxy.client.core.gl.GlVertexArray;
@@ -105,7 +107,7 @@ public class HiZBuffer {
         glTextureParameteri(this.texture.id, GL_TEXTURE_BASE_LEVEL, 0);
         glTextureParameteri(this.texture.id, GL_TEXTURE_MAX_LEVEL, 1000);//TODO: CHECK IF ITS -1 or -0
 
-        glDepthFunc(GL_LEQUAL);
+        glDepthFunc(GlConst.toGl(DepthStencilState.DEFAULT.depthTest()));
         glDisable(GL_DEPTH_TEST);
         glBindFramebuffer(GL_FRAMEBUFFER, boundFB);
         glViewport(0, 0, width, height);
